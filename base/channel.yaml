@@ -6,4 +6,4 @@ metadata:
   namespace: app-example-ns
 spec:
   type: GitHub
-  pathname: https://gitlab.com/minageorge/mina-playland.git
+  pathname: https://github.com/minageorge83/mina-playland.git
