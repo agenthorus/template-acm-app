@@ -10,7 +10,7 @@ spec:
     - key: app
       operator: In
       values:
-      - example-app
+      - app-example
   componentKinds:
   - group: apps.open-cluster-management.io
     kind: Subscription

@@ -4,9 +4,7 @@ metadata:
   annotations:
     description: Exposes and load balances the application pods
   labels:
-    app: httpd-example
-    template: httpd-example
-    template.openshift.io/template-instance-owner: 41f5d4d5-d4bd-4462-a3b7-eba24d9b0c9d
+    app: app-example
   name: app-example
   namespace: app-example-ns
 spec:

@@ -5,7 +5,7 @@ metadata:
   name: example-app-pr
   namespace: app-example-ns
   labels:
-    app: example-app
+    app: app-example
 spec:
   clusterReplicas: 1
   clusterConditions:

@@ -1,15 +1,12 @@
 apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
-  annotations:
-    openshift.io/host.generated: "true"
   labels:
-    app: httpd-example
-    template: httpd-example
+    app: app-example
   name: app-example
   namespace: app-example-ns
 spec:
-  host: app-example-minamina.apps.cluster-b661.b661.sandbox901.opentlc.com
+  host: app-example-route.apps.cluster-b661.b661.sandbox901.opentlc.com
   to:
     kind: Service
     name: app-example

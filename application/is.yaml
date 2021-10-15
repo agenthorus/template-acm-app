@@ -4,8 +4,7 @@ metadata:
   annotations:
     description: Keeps track of changes in the application image
   labels:
-    app: httpd-example
-    template: httpd-example
+    app: app-example
   name: app-example
   namespace: app-example-ns
 spec:
