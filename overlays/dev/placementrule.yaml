@@ -1,0 +1,20 @@
+
+apiVersion: apps.open-cluster-management.io/v1
+kind: PlacementRule
+metadata:
+  name: example-app-pr
+  namespace: app-example-ns
+  labels:
+    app: example-app
+spec:
+  clusterReplicas: 1
+  clusterConditions:
+    - type: ManagedClusterConditionAvailable
+      status: "True"
+  clusterSelector:
+    matchExpressions:
+    - key: name
+      operator: In
+      values:
+      - local-cluster
+#      - ADM2

@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    description: Exposes and load balances the application pods
+  labels:
+    app: httpd-example
+    template: httpd-example
+    template.openshift.io/template-instance-owner: 41f5d4d5-d4bd-4462-a3b7-eba24d9b0c9d
+  name: app-example
+  namespace: app-example-ns
+spec:
+  clusterIP: 172.30.19.135
+  ports:
+  - name: web
+    port: 8080
+  selector:
+    name: app-example

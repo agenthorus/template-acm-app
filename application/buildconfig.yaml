@@ -1,0 +1,43 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  annotations:
+    description: Defines how to build the application
+    template.alpha.openshift.io/wait-for-ready: "true"
+  labels:
+    app: httpd-example
+    template: httpd-example
+  name: app-example
+  namespace: app-example-ns
+spec:
+  failedBuildsHistoryLimit: 5
+  nodeSelector: null
+  output:
+    to:
+      kind: ImageStreamTag
+      name: app-example:latest
+  runPolicy: Serial
+  source:
+    git:
+      ref: master
+      uri: https://github.com/sclorg/httpd-ex.git
+    type: Git
+  strategy:
+    sourceStrategy:
+      from:
+        kind: ImageStreamTag
+        name: httpd:2.4-el8
+        namespace: openshift
+    type: Source
+  successfulBuildsHistoryLimit: 5
+  triggers:
+  - imageChange:
+      lastTriggeredImageID: image-registry.openshift-image-registry.svc:5000/openshift/httpd@sha256:521ff31a723a6c31ab527db1694457a1b9c792c83b9c48e70aec61187e83bb72
+    type: ImageChange
+  - type: ConfigChange
+  - github:
+      secret: StsEYDySAuJXwSGKIPaVqCYwSI27k311WuytecY8
+    type: GitHub
+  - generic:
+      secret: 7Kw7Sdg7oLw0ja20qOPLRl6BggfpSdJipbgPis6O
+    type: Generic

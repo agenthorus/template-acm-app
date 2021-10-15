@@ -1,0 +1,16 @@
+---
+apiVersion: app.k8s.io/v1beta1
+kind: Application
+metadata:
+  name: app-example
+  namespace: app-example-ns
+spec:
+  selector:
+    matchExpressions:
+    - key: app
+      operator: In
+      values:
+      - example-app
+  componentKinds:
+  - group: apps.open-cluster-management.io
+    kind: Subscription

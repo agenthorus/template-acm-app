@@ -1,0 +1,81 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  annotations:
+    description: Defines how to deploy the application server
+    template.alpha.openshift.io/wait-for-ready: "true"
+  labels:
+    app: httpd-example
+    template: httpd-example
+  name: app-example
+  namespace: app-example-ns
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    name: app-example
+  strategy:
+    activeDeadlineSeconds: 21600
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 600
+      updatePeriodSeconds: 1
+    type: Rolling
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        name: app-example
+      name: app-example
+    spec:
+      containers:
+      - image: image-registry.openshift-image-registry.svc:5000/minamina/app-example@sha256:983ede1a6cfcb15dd5cd77e4dae5fbbfc04a6cc37ceba02af69d1374ac69dc6c
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 3
+        name: httpd-example
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 3
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 3
+        resources:
+          limits:
+            memory: 512Mi
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      terminationGracePeriodSeconds: 30
+  test: false
+  triggers:
+  - imageChangeParams:
+      automatic: true
+      containerNames:
+      - httpd-example
+      from:
+        kind: ImageStreamTag
+        name: app-example:latest
+        namespace: app-example-ns
+      lastTriggeredImage: image-registry.openshift-image-registry.svc:5000/minamina/app-example@sha256:983ede1a6cfcb15dd5cd77e4dae5fbbfc04a6cc37ceba02af69d1374ac69dc6c
+    type: ImageChange
+  - type: ConfigChange

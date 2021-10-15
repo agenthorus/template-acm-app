@@ -1,0 +1,16 @@
+apiVersion: apps.open-cluster-management.io/v1
+kind: Subscription
+metadata:
+  name: example-app-sub
+  namespace: app-example-ns
+  labels:
+    app: example-app
+  annotations:
+    apps.open-cluster-management.io/git-path: /
+    apps.open-cluster-management.io/git-branch: main
+spec:
+  channel: app-example-ns/example-app-latest
+  placement:
+    placementRef:
+      kind: PlacementRule
+      name: example-app-pr

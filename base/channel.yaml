@@ -1,0 +1,9 @@
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: Channel
+metadata:
+  name: example-app-latest
+  namespace: app-example-ns
+spec:
+  type: GitHub
+  pathname: https://gitlab.com/minageorge/mina-playland.git
